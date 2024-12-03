@@ -9,7 +9,7 @@ on:
     # as a best practice, especially if you'd like to compare the results
     # of two scans (e.g., a feature branch against the default branch)
     branches:
-      - main
+      - master
      
 jobs:
   ngsast-build:

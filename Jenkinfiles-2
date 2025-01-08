@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your code from your repository
+                //git 'https://your-repo-url.git'
+                echo "Hello"
+            }
+        }
+        stage('Checkmarx Scan') {
+            steps {
+                script {
+                    // Run Checkmarx scan
+                   checkmarxASTScanner additionalOptions: '', baseAuthUrl: '', branchName: 'main', checkmarxInstallation: 'CxOne', credentialsId: 'CxOneID', projectName: 'security-chatbot', serverUrl: '', tenantName: ''
+                }
+            }
+        }
+    stage('BUILD') {
+            steps {
+                echo "BUILD"
+            }
+        }
+   stage('TEST') {
+            steps {
+                echo "TEST"
+            }
+        }
+        stage('DEPLOYMENT') {
+            steps {
+                 echo "DEPLOYMENT"
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive the results
+            archiveArtifacts artifacts: '**/CheckmarxReports/*.*', allowEmptyArchive: true
+        }
+    }
+}
